@@ -9,6 +9,7 @@ local servers = {
   clangd = {},
   cssls = {},
   ruff = {},
+  eslint = {},
   jdtls = {},
   kotlin_language_server = {},
   ts_ls = {},

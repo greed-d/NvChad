@@ -137,6 +137,20 @@ return {
     "nvim-tree/nvim-tree.lua",
     enabled = false,
   },
+  {
+    "utilyre/barbecue.nvim",
+    event = "LspAttach",
+    name = "barbecue",
+    enabled = true,
+    version = "*",
+    dependencies = {
+      "SmiteshP/nvim-navic",
+      "nvim-tree/nvim-web-devicons", -- optional dependency
+    },
+    opts = {
+      config = true,
+    },
+  },
 
   {
     "nvim-treesitter/nvim-treesitter",
