@@ -10,7 +10,7 @@ local servers = {
   cssls = {},
   ruff = {},
   eslint = {},
-  jdtls = {},
+  -- jdtls = {},
   kotlin_language_server = {},
   ts_ls = {},
   emmet_ls = {},
@@ -37,6 +37,8 @@ local servers = {
     },
   },
 }
+
+require("java").setup()
 
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init

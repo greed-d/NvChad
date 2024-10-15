@@ -2,6 +2,11 @@ return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
 
+  dev = {
+    path = "~/Dev/hobby/neovim/",
+    fallback = true,
+  },
+
   ui = {
     icons = {
       ft = "",
