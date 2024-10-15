@@ -4,7 +4,13 @@ return {
     event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
-
+  {
+    "nvchad/ui",
+    config = function()
+      require "nvchad"
+    end,
+    -- dev = true,
+  },
   -- These are some examples, uncomment them if you want to see them work!
   {
     "neovim/nvim-lspconfig",
@@ -119,10 +125,13 @@ return {
 
   {
     "alexghergh/nvim-tmux-navigation",
+    event = "VeryLazy",
     config = function()
       require "configs.tmux-navigation"
     end,
   },
+
+  { "nvim-java/nvim-java", ft = "java" },
 
   {
     "hrsh7th/nvim-cmp",

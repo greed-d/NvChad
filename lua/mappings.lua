@@ -58,16 +58,28 @@ map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "close buffers" })
 map({ "n", "v", "t" }, "\\", "<cmd>Neotree toggle<CR>", { desc = "Toggle neo-tree" })
 
 map("n", "<A-b>", function()
-  require("nvchad.floaterm").open {
-    w = 0.4,
-    h = 0.4,
+  require("nvchad.term").runner {
+    id = "boo",
+    pos = "float",
 
-    terms = {
-      {
-        name = "fetch",
-        cmd = "fastfetch",
-      },
-    },
+    cmd = function()
+      local file = vim.fn.expand "%"
+      local sfile = vim.fn.expand "%:r"
+
+      local ft_cmds = {
+        sh = "bash " .. file,
+        rust = "cargo " .. file,
+        python = "python3 " .. file,
+        javascript = "node " .. file,
+        java = "javac " .. file .. " && java " .. sfile,
+        go = "go build && go run " .. file,
+        c = "g++ " .. file .. " -o " .. sfile .. " && ./" .. sfile,
+        cpp = "g++ " .. file .. " -o " .. sfile .. " && ./" .. sfile,
+        typescript = "deno compile " .. file .. " && deno run " .. file,
+      }
+
+      return ft_cmds[vim.bo.ft]
+    end,
   }
 end)
 

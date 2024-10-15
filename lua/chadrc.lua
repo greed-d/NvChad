@@ -5,6 +5,18 @@
 ---@type ChadrcConfig
 local M = {}
 
+local function get_venv(variable)
+  local venv = os.getenv(variable)
+  if venv ~= nil and string.find(venv, "/") then
+    local orig_venv = venv
+    for w in orig_venv:gmatch "([^/]+)" do
+      venv = w
+    end
+    venv = string.format("%s", venv)
+  end
+  return venv
+end
+
 M.base46 = {
   theme = "catppuccin",
 
@@ -22,13 +34,6 @@ M.lsp = {
   signature = false,
 }
 
-M.colorify = {
-  enabled = true,
-  mode = "virtual", -- fg, bg, virtual
-  virt_text = "󱓻 ",
-  highlight = { hex = true, lspvars = true },
-}
-
 M.ui = {
   cmp = {
     icons = true,
@@ -41,36 +46,26 @@ M.ui = {
   ------------------------------- nvchad_ui modules -----------------------------
   statusline = {
     theme = "default", -- default/vscode/vscode_colored/minimal
-    separator_style = "round",
-    -- separator_style = {
-    --   sep_l = "",
-    --   sep_r = "",
-    -- },
-    order = nil,
+    separator_style = "default",
+    order = { "mode", "file", "python_venv", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cursor", "cwd" },
     modules = {
-      git = function()
-        local stbufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
-        if not vim.b[stbufnr].gitsigns_head or vim.b[stbufnr].gitsigns_git_status then
-          return ""
-        end
+      git = require("configs.ui.statusline.components").git,
+      lsp = require("configs.ui.statusline.components").lsp,
+      cursor = require("configs.ui.statusline.components").cursor,
+      python_venv = require("configs.ui.statusline.components").python_venv,
 
-        local git_status = vim.b[stbufnr].gitsigns_status_dict
-
-        local added = (git_status.added and git_status.added ~= 0) and ("  " .. git_status.added) or ""
-        local changed = (git_status.changed and git_status.changed ~= 0) and ("  " .. git_status.changed) or ""
-        local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed) or ""
-        local branch_name = " " .. git_status.head
-
-        return " "
-          .. "%#DevIconYaml#"
-          .. branch_name
-          .. "%#GitSignsAdd#"
-          .. added
-          .. "%#GitSignsChange#"
-          .. changed
-          .. "%#GitSignsDelete#"
-          .. removed
-      end,
+      -- python_venv = function()
+      --   if vim.bo.filetype ~= "python" then
+      --     return " "
+      --   end
+      --
+      --   local venv = get_venv "CONDA_DEFAULT_ENV" or get_venv "VIRTUAL_ENV" or " "
+      --   if venv == " " then
+      --     return " "
+      --   else
+      --     return "%#Statement#" .. " 󰆑 " .. venv
+      --   end
+      -- end,
     },
   },
 
