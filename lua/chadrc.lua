@@ -5,18 +5,6 @@
 ---@type ChadrcConfig
 local M = {}
 
-local function get_venv(variable)
-  local venv = os.getenv(variable)
-  if venv ~= nil and string.find(venv, "/") then
-    local orig_venv = venv
-    for w in orig_venv:gmatch "([^/]+)" do
-      venv = w
-    end
-    venv = string.format("%s", venv)
-  end
-  return venv
-end
-
 M.base46 = {
   theme = "catppuccin",
 
@@ -41,7 +29,7 @@ M.ui = {
     style = "default", -- default/flat_light/flat_dark/atom/atom_colored
   },
 
-  telescope = { style = "borderless" }, -- borderless / bordered
+  telescope = { style = "bordered" }, -- borderless / bordered
 
   ------------------------------- nvchad_ui modules -----------------------------
   statusline = {
@@ -53,19 +41,6 @@ M.ui = {
       lsp = require("configs.ui.statusline.components").lsp,
       cursor = require("configs.ui.statusline.components").cursor,
       python_venv = require("configs.ui.statusline.components").python_venv,
-
-      -- python_venv = function()
-      --   if vim.bo.filetype ~= "python" then
-      --     return " "
-      --   end
-      --
-      --   local venv = get_venv "CONDA_DEFAULT_ENV" or get_venv "VIRTUAL_ENV" or " "
-      --   if venv == " " then
-      --     return " "
-      --   else
-      --     return "%#Statement#" .. " 󰆑 " .. venv
-      --   end
-      -- end,
     },
   },
 
