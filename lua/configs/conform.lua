@@ -8,7 +8,7 @@ local options = {
     python = { "black" },
     bash = { "shfmt" },
     nix = { "nixfmt" },
-    java = { "google-java-format" },
+    java = { "checkstyle", "google-java-format" },
   },
 
   format_on_save = {
