@@ -4,17 +4,33 @@ return {
   opts = {
     -- add any options here
   },
-  enabled = false,
+  enabled = true,
   dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
     "MunifTanjim/nui.nvim",
+    "stevearc/dressing.nvim",
     -- OPTIONAL:
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
-    "rcarriga/nvim-notify",
+    {
+      "rcarriga/nvim-notify",
+    },
   },
   config = function()
     require("noice").setup {
+      routes = {
+        {
+          filter = {
+            event = "lsp",
+            kind = "progress",
+            cond = function(message)
+              local client = vim.tbl_get(message.opts, "progress", "client")
+              return client == "lua_ls"
+            end,
+          },
+          opts = { skip = true },
+        },
+      },
       lsp = {
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
