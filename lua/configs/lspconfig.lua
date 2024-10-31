@@ -16,17 +16,6 @@ local servers = {
   emmet_ls = {},
   taplo = {},
 
-  basedpyright = {
-    settings = {
-      python = {
-        analysis = {
-          autoSearchPaths = true,
-          typeCheckingMode = "basic",
-        },
-      },
-    },
-  },
-
   lua_ls = {
     settings = {
       Lua = {
@@ -38,7 +27,7 @@ local servers = {
   },
 }
 
-require("java").setup()
+-- require("java").setup()
 
 for name, opts in pairs(servers) do
   opts.on_init = configs.on_init

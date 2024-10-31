@@ -11,6 +11,7 @@ local nomap = {
   "<leader>x",
   "<leader>b",
   "<C-n>",
+  "<leader>h",
   "<C-h>",
   "<C-j>",
   "<C-k>",
@@ -54,6 +55,8 @@ map("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new
 map("n", "<leader>o", "<cmd>Oil<CR>", { desc = "Toggle [O]il" })
 map("n", "<leader>bk", "<cmd>bdelete<CR>", { desc = "close buffers" })
 map("n", "<leader>bn", "<cmd>enew<CR>", { desc = "close buffers" })
+
+map("t", "<Esc><Esc>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
 
 map({ "n", "v", "t" }, "\\", "<cmd>Neotree toggle<CR>", { desc = "Toggle neo-tree" })
 

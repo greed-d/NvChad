@@ -14,7 +14,7 @@ local keys = {
     desc = "[M]ark [L]ist",
   },
   {
-    "<C-0>",
+    "<leader>j",
     function()
       require("harpoon.ui").nav_file(1)
     end,
@@ -22,28 +22,28 @@ local keys = {
     desc = "Move to 1st file in list",
   },
   {
-    "<C-9>",
+    "<leader>k",
     function()
       require("harpoon.ui").nav_file(2)
     end,
     desc = "Move to 2nd file in list",
   },
   {
-    "<C-8>",
+    "<leader>l",
     function()
       require("harpoon.ui").nav_file(3)
     end,
     desc = "Move to 3rd file in list",
   },
   {
-    "<C-7>",
+    "<leader>;",
     function()
       require("harpoon.ui").nav_file(4)
     end,
     desc = "Move to 4th file in list",
   },
   {
-    "mt",
+    "<leader>'",
     function()
       require("harpoon.ui").nav_file(5)
     end,

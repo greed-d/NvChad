@@ -37,3 +37,8 @@ require "autocommands"
 vim.schedule(function()
   require "mappings"
 end)
+
+if vim.g.vscode then
+  cmdheight = 1
+  return
+end

@@ -6,8 +6,32 @@
 local M = {}
 
 M.base46 = {
-  theme = "catppuccin",
+  theme = "nordic",
 
+  integrations = {
+    "blankline",
+    "cmp",
+    "defaults",
+    "devicons",
+    "git",
+    "lsp",
+    "markview",
+    "mason",
+    "nvcheatsheet",
+    "nvimtree",
+    "statusline",
+    "syntax",
+    "tbline",
+    "telescope",
+    "whichkey",
+    "dap",
+    "hop",
+    "treesitter",
+    "rainbowdelimiters",
+    "todo",
+    "trouble",
+    "notify",
+  },
   hl_override = {
     Comment = { italic = true },
     ["@comment"] = { italic = true },
@@ -34,13 +58,27 @@ M.ui = {
   ------------------------------- nvchad_ui modules -----------------------------
   statusline = {
     theme = "default", -- default/vscode/vscode_colored/minimal
-    separator_style = "default",
-    order = { "mode", "file", "python_venv", "git", "%=", "lsp_msg", "%=", "diagnostics", "lsp", "cursor", "cwd" },
+    separator_style = "round",
+    order = {
+      "mode",
+      "file",
+      "python_venv",
+      "git",
+      "%=",
+      "lsp_msg",
+      "%=",
+      "macro",
+      "diagnostics",
+      "lsp",
+      "cursor",
+      "cwd",
+    },
     modules = {
       git = require("configs.ui.statusline.components").git,
       lsp = require("configs.ui.statusline.components").lsp,
       cursor = require("configs.ui.statusline.components").cursor,
       python_venv = require("configs.ui.statusline.components").python_venv,
+      macro = require("configs.ui.statusline.components").macro,
     },
   },
 

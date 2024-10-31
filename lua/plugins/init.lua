@@ -1,17 +1,18 @@
 return {
+  --[[
+  
+  ▗▖    ▗▄▄▖▗▄▄▖      ▗▄▖ ▗▖  ▗▖▗▄▄▄     ▗▖ ▗▖▗▄▄▄▖ ▗▄▄▖▗▖ ▗▖▗▖   ▗▄▄▄▖ ▗▄▄▖▗▖ ▗▖▗▄▄▄▖▗▄▄▖
+  ▐▌   ▐▌   ▐▌ ▐▌    ▐▌ ▐▌▐▛▚▖▐▌▐▌  █    ▐▌ ▐▌  █  ▐▌   ▐▌ ▐▌▐▌     █  ▐▌   ▐▌ ▐▌  █ ▐▌   
+  ▐▌    ▝▀▚▖▐▛▀▘     ▐▛▀▜▌▐▌ ▝▜▌▐▌  █    ▐▛▀▜▌  █  ▐▌▝▜▌▐▛▀▜▌▐▌     █  ▐▌▝▜▌▐▛▀▜▌  █  ▝▀▚▖
+  ▐▙▄▄▖▗▄▄▞▘▐▌       ▐▌ ▐▌▐▌  ▐▌▐▙▄▄▀    ▐▌ ▐▌▗▄█▄▖▝▚▄▞▘▐▌ ▐▌▐▙▄▄▖▗▄█▄▖▝▚▄▞▘▐▌ ▐▌  █ ▗▄▄▞▘
+
+  --]]
   {
     "stevearc/conform.nvim",
     event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
-  {
-    "nvchad/ui",
-    config = function()
-      require "nvchad"
-    end,
-    -- dev = true,
-  },
-  -- These are some examples, uncomment them if you want to see them work!
+
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -20,24 +21,123 @@ return {
   },
 
   {
+    "nvchad/ui",
+    config = function()
+      require "nvchad"
+    end,
+    -- dev = true,
+  },
+
+  { "mfussenegger/nvim-jdtls", ft = "java", config = function() end },
+
+  {
+    "hrsh7th/nvim-cmp",
+    opts = function()
+      local conf = require "nvchad.configs.cmp"
+      conf.mapping = require("configs.cmp").mapping
+      return conf
+    end,
+  },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "rcasia/neotest-java",
+    },
+    config = function()
+      require("neotest").setup {
+        adapters = {
+          require "neotest-java",
+        },
+      }
+    end,
+  },
+
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = "mfussenegger/nvim-dap",
+  },
+  -- { "nvim-java/nvim-java", ft = "java" },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      auto_install = true,
+      ensure_installed = {
+        "vim",
+        "lua",
+        "vimdoc",
+        "java",
+        "python",
+        "html",
+        "css",
+      },
+    },
+    -- config = function()
+    -- require("treesitter").setup {
+    --   vim.filetype.add {
+    --     pattern = { [".*/hypr/.*%.conf"] = "hyprlang" },
+    --   },
+    -- }
+    -- end,
+  },
+
+  --[[
+▗▖ ▗▖▗▄▄▄▖     ▗▄▄▖▗▄▄▄▖▗▖ ▗▖▗▄▄▄▖▗▄▄▄▖
+▐▌ ▐▌  █      ▐▌     █  ▐▌ ▐▌▐▌   ▐▌   
+▐▌ ▐▌  █       ▝▀▚▖  █  ▐▌ ▐▌▐▛▀▀▘▐▛▀▀▘
+▝▚▄▞▘▗▄█▄▖    ▗▄▄▞▘  █  ▝▚▄▞▘▐▌   ▐▌   
+
+]]
+  {
     "nvim-telescope/telescope.nvim",
     keys = require("configs.telescope").keys,
   },
 
   {
+    "toppair/peek.nvim",
+    ft = "markdown",
+    build = "deno task --quiet build:fast",
+    config = function()
+      require("peek").setup()
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+    end,
+  },
+
+  --[[
+  ▗▖  ▗▖ ▗▄▖ ▗▖  ▗▖▗▄▄▄▖ ▗▄▄▖ ▗▄▖▗▄▄▄▖▗▄▄▄▖ ▗▄▖ ▗▖  ▗▖
+  ▐▛▚▖▐▌▐▌ ▐▌▐▌  ▐▌  █  ▐▌   ▐▌ ▐▌ █    █  ▐▌ ▐▌▐▛▚▖▐▌
+  ▐▌ ▝▜▌▐▛▀▜▌▐▌  ▐▌  █  ▐▌▝▜▌▐▛▀▜▌ █    █  ▐▌ ▐▌▐▌ ▝▜▌
+  ▐▌  ▐▌▐▌ ▐▌ ▝▚▞▘ ▗▄█▄▖▝▚▄▞▘▐▌ ▐▌ █  ▗▄█▄▖▝▚▄▞▘▐▌  ▐▌
+  --]]
+  {
     "Theprimeagen/harpoon",
     config = true,
     keys = require "configs.harpoon",
   },
-
+  {
+    "leath-dub/snipe.nvim",
+    keys = {
+      {
+        "<leader>L",
+        function()
+          require("snipe").open_buffer_menu()
+        end,
+        desc = "Open Snipe buffer menu",
+      },
+    },
+    opts = {},
+  },
   {
     "vyfor/cord.nvim",
     build = "./build || .\\build",
     event = "VeryLazy",
     opts = require "configs.cord",
   },
-
-  { "mfussenegger/nvim-jdtls", ft = "java", config = function() end },
 
   {
     "stevearc/oil.nvim",
@@ -47,28 +147,6 @@ return {
       ["<C-h>"] = false,
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
-  },
-
-  {
-    "nvim-lualine/lualine.nvim",
-
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-      "greed-d/lualine-so-fancy.nvim",
-    },
-
-    init = function()
-      vim.g.lualine_laststatus = vim.o.laststatus
-      if vim.fn.argc(-1) > 0 then
-        vim.o.statusline = " "
-      else
-        vim.o.laststatus = 0
-      end
-    end,
-
-    config = function()
-      return require "configs.lualine"
-    end,
   },
 
   {
@@ -90,17 +168,6 @@ return {
     cmd = { "LiveServerStart", "LiveServerStop" },
     config = function()
       require("live-server").setup(opts)
-    end,
-  },
-
-  {
-    "toppair/peek.nvim",
-    ft = "markdown",
-    build = "deno task --quiet build:fast",
-    config = function()
-      require("peek").setup()
-      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
-      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
   },
 
@@ -129,17 +196,7 @@ return {
     config = function()
       require "configs.tmux-navigation"
     end,
-  },
-
-  { "nvim-java/nvim-java", ft = "java" },
-
-  {
-    "hrsh7th/nvim-cmp",
-    opts = function()
-      local conf = require "nvchad.configs.cmp"
-      conf.mapping = require("configs.cmp").mapping
-      return conf
-    end,
+    enabled = false,
   },
 
   {
@@ -158,22 +215,6 @@ return {
     },
     opts = {
       config = true,
-    },
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      auto_install = true,
-      ensure_installed = {
-        "vim",
-        "lua",
-        "vimdoc",
-        "java",
-        "python",
-        "html",
-        "css",
-      },
     },
   },
 }

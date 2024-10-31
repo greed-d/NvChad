@@ -26,7 +26,7 @@ M.git = function()
   local branch_name = " " .. git_status.head
 
   return " "
-    .. "%#DevIconYaml#"
+    .. "%#St_gitIcons#"
     .. branch_name
     .. "%#GitSignsAdd#"
     .. added
@@ -151,4 +151,12 @@ M.python_venv = function()
   end
 end
 
+M.macro = function()
+  local recording = vim.fn.reg_recording() -- Check if a macro is being recorded
+  if recording ~= "" then
+    return "@" .. recording -- Return the register key where the macro is being recorded
+  else
+    return "" -- Return an empty string if no macro is being recorded
+  end
+end
 return M
